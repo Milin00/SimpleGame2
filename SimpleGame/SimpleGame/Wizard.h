@@ -1,8 +1,7 @@
 #pragma once
 #include"Character.h"
-class Swordsman:public Character
+class Wizard:public Character
 {
 public:
 	void setAttack() override;
 };
-
