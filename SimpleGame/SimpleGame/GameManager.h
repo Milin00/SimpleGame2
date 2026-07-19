@@ -2,7 +2,7 @@
 class GameManager
 {
 private:
-	int military;
+    int military = 100;
 public:
 };
 
