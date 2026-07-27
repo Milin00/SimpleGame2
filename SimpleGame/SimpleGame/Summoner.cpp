@@ -1,5 +1,11 @@
 #include "Summoner.h"
-Summoner::Summoner()
+void Summoner::setAttack(int& value)
 {
-	attack = rand() % 50;
+	attack = value;
+}
+
+std::string Summoner::getName()
+{
+	name = "¢Š«m";
+	return name;
 }

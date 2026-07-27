@@ -1,5 +1,11 @@
 #include "Swordsman.h"
-Swordsman::Swordsman()
+void Swordsman::setAttack(int& value)
 {
-	attack = rand() % 50;
+	attack = value;
+}
+
+std::string Swordsman::getName()
+{
+	name = "Œ•Žm";
+	return name;
 }

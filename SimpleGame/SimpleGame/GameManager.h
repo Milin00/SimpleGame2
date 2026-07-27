@@ -14,8 +14,10 @@ private:
 public:
     int SelectPlayer();
     int SelectEnemy();
+    void EnemyState();
     void Battle(int player, int enemy);
     void getMilitary();
+    void UpdateAttack();
+    GameManager();
     ~GameManager();
 };
-

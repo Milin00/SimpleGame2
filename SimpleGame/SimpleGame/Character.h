@@ -6,10 +6,13 @@
 class Character
 {
 protected:
-    int attack;
+    int attack=10;
+    std::string name;
 
 public:
     virtual ~Character() = default;
+    virtual void setAttack(int& value) = 0;
+    virtual std::string getName() = 0;
     int getAttack() const
     {
         return attack;

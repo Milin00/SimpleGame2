@@ -3,5 +3,6 @@
 class Wizard:public Character
 {
 public:
-	Wizard();
+	void setAttack(int& value) override;
+	std::string getName() override;
 };

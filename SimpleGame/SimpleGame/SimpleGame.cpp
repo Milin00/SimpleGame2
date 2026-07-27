@@ -7,9 +7,12 @@ int main()
 	GameManager game;
 	while (true)
 	{
+		game.getMilitary();
+		game.EnemyState();
 		int x=game.SelectPlayer();
 		int y=game.SelectEnemy();
 		game.Battle(x,y);
-		game.getMilitary();
+		game.UpdateAttack();
+		std::cout << "\n";
 	}
 }

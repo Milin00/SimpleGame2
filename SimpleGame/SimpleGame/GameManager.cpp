@@ -1,4 +1,8 @@
 #include "GameManager.h"
+GameManager::GameManager()
+{
+	UpdateAttack();;
+}
 GameManager::~GameManager()
 {
 	for (auto p : players)
@@ -12,10 +16,13 @@ int GameManager::SelectPlayer()
 	int a;
 	while (true)
 	{
+		int i = 0;
 		std::cout << "’N‚ð‘I‚Ñ‚Ü‚·‚©?"<<std::endl;
-		std::cout<<"0:Œ•Žm UŒ‚—Í:"<<players[0]->getAttack() << std::endl;
-		std::cout << "1:–‚–@Žg‚¢ UŒ‚—Í:" << players[1]->getAttack() << std::endl;
-		std::cout << "2:¢Š«Žm UŒ‚—Í:" << players[2]->getAttack() << std::endl;
+		for (auto p : players)
+		{
+			std::cout << i << ":" << p->getName() << "UŒ‚—Í" << p->getAttack() << std::endl;
+			i++;
+		}
 		std::cin >> a;
 		if (a < 0 || a >= 3)
 		{
@@ -29,19 +36,15 @@ int GameManager::SelectPlayer()
 int GameManager::SelectEnemy()
 {
 	int r = rand() % 3;
-	if (r == 0)
-	{
-		std::cout << "Œ•Žm" << std::endl;
-	}
-	else if (r == 1)
-	{
-		std::cout << "–‚–@Žg‚¢" << std::endl;
-	}
-	else if (r == 2)
-	{
-		std::cout << "¢Š«Žm" << std::endl;
-	}
+	std::cout << "“GF" << enemies[r]->getName() << " UŒ‚—ÍF" << enemies[r]->getAttack() << std::endl;
 	return r;
+}
+void GameManager::EnemyState()
+{
+	for (auto e : enemies)
+	{
+		std::cout <<"“G:"<< e->getName() << " UŒ‚—Í:" << e->getAttack() << std::endl;
+	}
 }
 
 void GameManager::Battle(int player, int enemy)
@@ -72,7 +75,7 @@ void GameManager::Battle(int player, int enemy)
 			std::cout << "ƒNƒŠƒeƒBƒJƒ‹UŒ‚" << std::endl;
 			enemyMilitary -= players[player]->getAttack() * 2;
 		}
-		if (player == 2 && enemy == 1)
+		else if (player == 2 && enemy == 1)
 		{
 			std::cout << "ƒJƒEƒ“ƒ^[”­¶" << std::endl;
 			Military -= enemies[enemy]->getAttack() * 2;
@@ -82,10 +85,49 @@ void GameManager::Battle(int player, int enemy)
 			std::cout << "ƒNƒŠƒeƒBƒJƒ‹UŒ‚" << std::endl;
 			enemyMilitary -= players[player]->getAttack() * 2;
 		}
+
+		if (enemyMilitary < 0)
+		{
+			enemyMilitary = 0;
+		}
+		if (Military < 0)
+		{
+			Military = 0;
+		}
 	}
 }
 void GameManager::getMilitary()
 {
 	std::cout << "ƒvƒŒƒCƒ„[Žc‚èí—Í:" << Military << std::endl;
 	std::cout << "“G‚ÌŽc‚èí—Í:" << enemyMilitary << std::endl;
+}
+
+void GameManager::UpdateAttack()
+{
+	int sword = rand()%21 + 30;
+	int wizard = rand() % 21 + 20;
+	int summoner = 100 - sword - wizard;
+	while (summoner < 15 || summoner>40)
+	{
+		sword = rand() % 21 + 30;
+		wizard = rand() % 21 + 20;
+		summoner = 100 - sword - wizard;
+	}
+	players[0]->setAttack(sword);
+	players[1]->setAttack(wizard);
+	players[2]->setAttack(summoner);
+
+
+	sword = rand() % 21 + 30;
+	wizard = rand() % 21 + 20;
+	summoner = 100 - sword - wizard;
+	while (summoner < 15 || summoner>40)
+	{
+		sword = rand() % 21 + 30;
+		wizard = rand() % 21 + 20;
+		summoner = 100 - sword - wizard;
+	}
+	enemies[0]->setAttack(sword);
+	enemies[1]->setAttack(wizard);
+	enemies[2]->setAttack(summoner);
 }

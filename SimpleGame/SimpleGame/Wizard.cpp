@@ -1,5 +1,10 @@
 #include "Wizard.h"
-Wizard::Wizard()
+void Wizard::setAttack(int& value)
 {
-	attack = rand() % 50;
+	attack = value;
+}
+std::string Wizard::getName()
+{
+	name = "–‚–@Žg‚¢";
+	return name;
 }
