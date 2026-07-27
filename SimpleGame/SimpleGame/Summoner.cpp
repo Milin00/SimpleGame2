@@ -1,5 +1,5 @@
 #include "Summoner.h"
-void Summoner::setAttack()
+Summoner::Summoner()
 {
-	attack = rand() / 50;
+	attack = rand() % 50;
 }

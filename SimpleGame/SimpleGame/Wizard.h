@@ -3,5 +3,5 @@
 class Wizard:public Character
 {
 public:
-	void setAttack() override;
+	Wizard();
 };

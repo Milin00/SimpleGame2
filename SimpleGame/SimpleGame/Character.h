@@ -6,11 +6,10 @@
 class Character
 {
 protected:
-    int attack = 0;
+    int attack;
 
 public:
     virtual ~Character() = default;
-    virtual void setAttack() = 0;
     int getAttack() const
     {
         return attack;

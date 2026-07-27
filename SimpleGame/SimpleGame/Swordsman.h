@@ -3,6 +3,6 @@
 class Swordsman:public Character
 {
 public:
-	void setAttack() override;
+	Swordsman();
 };
 

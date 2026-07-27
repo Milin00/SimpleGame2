@@ -1,5 +1,5 @@
 #include "Swordsman.h"
-void Swordsman::setAttack()
+Swordsman::Swordsman()
 {
-	attack = rand() / 50;
+	attack = rand() % 50;
 }

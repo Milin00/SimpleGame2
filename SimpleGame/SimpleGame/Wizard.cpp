@@ -1,5 +1,5 @@
 #include "Wizard.h"
-void Wizard::setAttack()
+Wizard::Wizard()
 {
-	attack = rand() / 50;
+	attack = rand() % 50;
 }
