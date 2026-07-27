@@ -47,54 +47,98 @@ void GameManager::EnemyState()
 	}
 }
 
-void GameManager::Battle(int player, int enemy)
+void GameManager::Battle(int player, int enemy, Action playerAction, Action enemyAction)
 {
-	if (player == enemy)
+	if (playerAction == DEFEND && enemyAction == DEFEND)
 	{
-		std::cout << "âΩÇ‡ãNÇ±ÇÁÇ»Ç©Ç¡ÇΩ" << std::endl;
+		std::cout<<"Ç®å›Ç¢Ç…ñhå‰ÇµÇΩ" << std::endl;
+		return;
 	}
-	else
+	// óºï˚çUåÇ
+	if (playerAction == ATTACK &&
+		enemyAction == ATTACK)
 	{
-		if (player == 0 && enemy == 1)
+		int pAttack = players[player]->getAttack();
+		int eAttack = enemies[enemy]->getAttack();
+
+		std::cout << "Ç®å›Ç¢çUåÇÅI\n";
+
+		if (pAttack > eAttack)
 		{
-			std::cout << "ÉJÉEÉìÉ^Å[î≠ê∂" << std::endl;
-			Military -= enemies[enemy]->getAttack() * 2;
+			std::cout << "ñ°ï˚ÇÃçUåÇê¨å˜\n";
+			enemyMilitary -= pAttack;
 		}
-		else if (player == 0 && enemy == 2)
+		else if (eAttack > pAttack)
 		{
-			std::cout << "ÉNÉäÉeÉBÉJÉãçUåÇ" << std::endl;
-			enemyMilitary -= players[player]->getAttack() * 2;
+			std::cout << "ìGÇÃçUåÇê¨å˜\n";
+			Military -= eAttack;
 		}
-		else if (player == 1 && enemy == 2)
+		else
 		{
-			std::cout << "ÉJÉEÉìÉ^Å[î≠ê∂" << std::endl;
-			Military -= enemies[enemy]->getAttack() * 2;
-		}
-		else if (player == 1 && enemy == 0)
-		{
-			std::cout << "ÉNÉäÉeÉBÉJÉãçUåÇ" << std::endl;
-			enemyMilitary -= players[player]->getAttack() * 2;
-		}
-		else if (player == 2 && enemy == 1)
-		{
-			std::cout << "ÉJÉEÉìÉ^Å[î≠ê∂" << std::endl;
-			Military -= enemies[enemy]->getAttack() * 2;
-		}
-		else if (player == 2 && enemy == 0)
-		{
-			std::cout << "ÉNÉäÉeÉBÉJÉãçUåÇ" << std::endl;
-			enemyMilitary -= players[player]->getAttack() * 2;
+			std::cout << "çUåÇóÕÇ™ìØÇ∂ÅBÉhÉçÅ[\n";
 		}
 
-		if (enemyMilitary < 0)
+		return;
+	}
+
+
+	// ñ°ï˚çUåÇÅAìGñhå‰
+	if (playerAction == ATTACK &&
+		enemyAction == DEFEND)
+	{
+		// Ç±Ç±Ç™å≥ÇÃëäê´ï\
+		if (player == 0 && enemy == 1 ||
+			player == 1 && enemy == 2 ||
+			player == 2 && enemy == 0)
 		{
-			enemyMilitary = 0;
+			std::cout << "ÉJÉEÉìÉ^Å[î≠ê∂\n";
+
+			Military -= players[player]->getAttack() * 2;
 		}
-		if (Military < 0)
+		else if (player == enemy)
 		{
-			Military = 0;
+			std::cout << "ñhå‰ê¨å˜\n";
+		}
+		else
+		{
+			std::cout << "ÉNÉäÉeÉBÉJÉãçUåÇ\n";
+
+			enemyMilitary -= players[player]->getAttack() * 2;
 		}
 	}
+
+
+	// ñ°ï˚ñhå‰ÅAìGçUåÇ
+	if (playerAction == DEFEND &&
+		enemyAction == ATTACK)
+	{
+
+		if (enemy == 0 && player == 1 ||
+			enemy == 1 && player == 2 ||
+			enemy == 2 && player == 0)
+		{
+			std::cout << "ìGÇÃÉJÉEÉìÉ^Å[î≠ê∂\n";
+
+			enemyMilitary -= enemies[enemy]->getAttack() * 2;
+		}
+		else if (player == enemy)
+		{
+			std::cout << "ñhå‰ê¨å˜\n";
+		}
+		else
+		{
+			std::cout << "ìGÇÃÉNÉäÉeÉBÉJÉãçUåÇ\n";
+
+			Military -= enemies[enemy]->getAttack() * 2;
+		}
+	}
+
+
+	if (Military < 0)
+		Military = 0;
+
+	if (enemyMilitary < 0)
+		enemyMilitary = 0;
 }
 void GameManager::getMilitary()
 {
@@ -130,4 +174,84 @@ void GameManager::UpdateAttack()
 	enemies[0]->setAttack(sword);
 	enemies[1]->setAttack(wizard);
 	enemies[2]->setAttack(summoner);
+}
+
+Action GameManager::SelectPlayerAction()
+{
+	int a;
+
+	while (true)
+	{
+		std::cout << "çsìÆÇëIëÇµÇƒÇ≠ÇæÇ≥Ç¢"<<std::endl;
+		std::cout << "0:çUåÇ"<<std::endl;
+		std::cout << "1:ñhå‰"<<std::endl;
+		std::cin >> a;
+
+		if (a == 0)
+		{
+			return ATTACK;
+		}
+
+		if (a == 1)
+		{
+			return DEFEND;
+		}
+
+		std::cout << "ñ≥å¯Ç»ì¸óÕÇ≈Ç∑"<<std::endl;
+	}
+}
+
+Action GameManager::SelectEnemyAction()
+{
+	int r = rand() % 2;
+	if (r == 0)
+	{
+		std::cout << "ìGÇÕçUåÇÇëIë" << std::endl;
+		return ATTACK;
+	}
+	else
+	{
+		std::cout << "ìGÇÕñhå‰ÇëIë" << std::endl;
+		return DEFEND;
+	}
+}
+
+
+void GameManager::GameStart()
+{
+	while (Military > 0 && enemyMilitary > 0)
+	{
+		std::cout << "\n===== É^Å[ÉìäJén =====\n";
+
+		int player = SelectPlayer();
+		int enemy = SelectEnemy();
+
+		Action pAction = SelectPlayerAction();
+		Action eAction = SelectEnemyAction();
+
+
+		Battle(
+			player,
+			enemy,
+			pAction,
+			eAction
+		);
+
+
+		getMilitary();
+
+
+		// éüÉ^Å[ÉìÇÃçUåÇóÕïœçX
+		UpdateAttack();
+	}
+
+
+	if (enemyMilitary <= 0)
+	{
+		std::cout << "ñ°ï˚êwâcÇÃèüóòÅI\n";
+	}
+	else
+	{
+		std::cout << "ìGêwâcÇÃèüóò...\n";
+	}
 }

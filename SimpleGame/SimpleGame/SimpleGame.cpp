@@ -11,7 +11,6 @@ int main()
 		game.EnemyState();
 		int x=game.SelectPlayer();
 		int y=game.SelectEnemy();
-		game.Battle(x,y);
 		game.UpdateAttack();
 		std::cout << "\n";
 	}

@@ -4,6 +4,13 @@
 #include"Swordsman.h"
 #include"Wizard.h"
 #include"Summoner.h"
+
+enum Action
+{
+    ATTACK,
+    DEFEND
+};
+
 class GameManager
 {
 private:
@@ -15,9 +22,12 @@ public:
     int SelectPlayer();
     int SelectEnemy();
     void EnemyState();
-    void Battle(int player, int enemy);
+    void Battle(int player, int enemy,Action playerAction,Action enemyAction);
     void getMilitary();
     void UpdateAttack();
+    void GameStart();
+    Action SelectPlayerAction();
+    Action SelectEnemyAction();
     GameManager();
     ~GameManager();
 };
