@@ -25,7 +25,7 @@ public:
     void Battle(int player, int enemy,Action playerAction,Action enemyAction);
     void getMilitary();
     void UpdateAttack();
-    void GameStart();
+    bool Gaming();
     Action SelectPlayerAction();
     Action SelectEnemyAction();
     GameManager();

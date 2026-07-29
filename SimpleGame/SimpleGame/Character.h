@@ -12,7 +12,7 @@ protected:
 public:
     virtual ~Character() = default;
     virtual void setAttack(int& value) = 0;
-    virtual std::string getName() = 0;
+    virtual std::string getName() const = 0;
     int getAttack() const
     {
         return attack;

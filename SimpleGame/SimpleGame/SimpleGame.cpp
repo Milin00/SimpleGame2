@@ -5,13 +5,18 @@ int main()
 {
 	srand((unsigned int)time(nullptr));
 	GameManager game;
-	while (true)
+	bool gaming = true;
+	while (gaming)
 	{
 		game.getMilitary();
 		game.EnemyState();
-		int x=game.SelectPlayer();
-		int y=game.SelectEnemy();
+		Action playeraction=game.SelectPlayerAction();
+		int player=game.SelectPlayer();
+		Action enemyaction=game.SelectEnemyAction();
+		int enemy=game.SelectEnemy();
+		game.Battle(player,enemy, playeraction, enemyaction);
 		game.UpdateAttack();
-		std::cout << "\n";
+		gaming=game.Gaming();
+		std::cout << "\n\n\n\n\n";
 	}
 }

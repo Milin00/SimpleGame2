@@ -1,10 +1,13 @@
 #include "Wizard.h"
+Wizard::Wizard()
+{
+	name = "魔法使い";
+}
 void Wizard::setAttack(int& value)
 {
 	attack = value;
 }
-std::string Wizard::getName()
+std::string Wizard::getName() const
 {
-	name = "魔法使い";
 	return name;
 }
