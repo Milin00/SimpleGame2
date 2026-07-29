@@ -12,8 +12,13 @@ Action GameManager::SelectPlayerAction()
 		std::cout << "行動を選択してください" << std::endl;
 		std::cout << "0:攻撃" << std::endl;
 		std::cout << "1:防御" << std::endl;
-		std::cin >> a;
-
+		if (!(std::cin >> a))
+		{
+			std::cout << "無効な入力です" << std::endl;
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			continue;
+		}
 		if (a == 0)
 		{
 			return ATTACK;
@@ -23,8 +28,7 @@ Action GameManager::SelectPlayerAction()
 		{
 			return DEFEND;
 		}
-
-		std::cout << "無効な入力です" << std::endl;
+		std::cout << "0か1を選択してください" << std::endl;
 	}
 }
 int GameManager::SelectPlayer()
@@ -34,13 +38,19 @@ int GameManager::SelectPlayer()
 	{
 		int i = 0;
 		std::cout << "誰を選びますか?"<<std::endl;
-		for (auto p : players)
+		for (auto& p : players)
 		{
 			std::cout << i << ":" << p->getName() << "攻撃力" << p->getAttack() << std::endl;
 			i++;
 		}
-		std::cin >> a;
-		if (a < 0 || a >= 3)
+		if (!(std::cin >> a))
+		{
+			std::cout << "数値を入力してください" << std::endl;
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			continue;
+		}
+		if (a < 0 || a >= players.size())
 		{
 			std::cout << "無効な数値です。もう一度入力して下さい" << std::endl;
 			continue;
@@ -72,7 +82,7 @@ int GameManager::SelectEnemy() const
 }
 void GameManager::EnemyState() const
 {
-	for (auto e : enemies)
+	for (auto& e : enemies)
 	{
 		std::cout <<"相手:"<< e->getName() << " 攻撃力:" << e->getAttack() << std::endl;
 	}
@@ -116,6 +126,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 		if ((player == 0 && enemy == 1) || (player == 1 && enemy == 2) || (player == 2 && enemy == 0))
 		{
 			std::cout << "カウンター発生"<<std::endl;
+			std::cout << "プレーヤーに" << players[player]->getAttack() * 2 << "のダメージ" << std::endl;
 
 			playerMilitary -= players[player]->getAttack() * 2;
 		}
@@ -125,7 +136,8 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 		}
 		else if ((player == 0 && enemy == 2) || (player == 1 && enemy == 0) || (player == 2 && enemy == 1))
 		{
-			std::cout << "クリティカル攻撃"<<std::endl;
+			std::cout << "プレイヤーのクリティカル攻撃"<<std::endl;
+			std::cout << "相手に" << players[player]->getAttack() * 2 << "のダメージ" << std::endl;
 
 			enemyMilitary -= players[player]->getAttack() * 2;
 		}
@@ -137,6 +149,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 		if ((enemy == 0 && player == 1) || (enemy == 1 && player == 2) || (enemy == 2 && player == 0))
 		{
 			std::cout << "相手のカウンター発生"<<std::endl;
+			std::cout << "相手に" << enemies[enemy]->getAttack() * 2 << "のダメージ" << std::endl;
 
 			enemyMilitary -= enemies[enemy]->getAttack() * 2;
 		}
@@ -147,6 +160,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 		else if ((player == 2 && enemy == 0) || (player == 0 && enemy == 1) || (player == 1 && enemy == 2))
 		{
 			std::cout << "相手のクリティカル攻撃"<<std::endl;
+			std::cout << "プレーヤーに" << enemies[enemy]->getAttack() * 2 <<"のダメージ"<< std::endl;
 
 			playerMilitary -= enemies[enemy]->getAttack() * 2;
 		}
@@ -207,7 +221,7 @@ bool GameManager::Gaming()
 		std::cout << "相手の勝利" << std::endl;
 		return false;
 	}
-	if (enemyMilitary==0)
+	else if (enemyMilitary==0)
 	{
 		std::cout << "プレイヤーの勝利" << std::endl;
 		return false;
@@ -217,9 +231,15 @@ bool GameManager::Gaming()
 
 GameManager::~GameManager()
 {
-	for (auto p : players)
+	for (auto& p : players)
+	{
 		delete p;
+		p = nullptr;
+	}
 
-	for (auto e : enemies)
+	for (auto& e : enemies)
+	{
 		delete e;
+		e = nullptr;
+	}
 }
