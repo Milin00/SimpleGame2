@@ -64,13 +64,13 @@ Action GameManager::SelectEnemyAction()
 		return DEFEND;
 	}
 }
-int GameManager::SelectEnemy()
+int GameManager::SelectEnemy() const
 {
 	int r = rand() % 3;
 	std::cout << "相手：" << enemies[r]->getName() << " 攻撃力：" << enemies[r]->getAttack() << std::endl;
 	return r;
 }
-void GameManager::EnemyState()
+void GameManager::EnemyState() const
 {
 	for (auto e : enemies)
 	{
@@ -101,7 +101,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 		else if (eAttack > pAttack)
 		{
 			std::cout << "相手の攻撃成功"<<std::endl;
-			Military -= eAttack;
+			playerMilitary -= eAttack;
 		}
 		else
 		{
@@ -117,7 +117,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 		{
 			std::cout << "カウンター発生"<<std::endl;
 
-			Military -= players[player]->getAttack() * 2;
+			playerMilitary -= players[player]->getAttack() * 2;
 		}
 		else if (player == enemy)
 		{
@@ -148,14 +148,14 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 		{
 			std::cout << "相手のクリティカル攻撃"<<std::endl;
 
-			Military -= enemies[enemy]->getAttack() * 2;
+			playerMilitary -= enemies[enemy]->getAttack() * 2;
 		}
 	}
 
 
-	if (Military < 0)
+	if (playerMilitary < 0)
 	{
-		Military = 0;
+		playerMilitary = 0;
 	}
 
 	if (enemyMilitary < 0)
@@ -163,9 +163,10 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 		enemyMilitary = 0;
 	}
 }
-void GameManager::getMilitary()
+void GameManager::showMilitary() const
 {
-	std::cout << "プレイヤー残り戦力:" << Military << std::endl;
+	std::cout << "プレイヤー残り戦力:" << playerMilitary << std::endl;
+	std::cout << "プレイヤー残り戦力:" << playerMilitary << std::endl;
 	std::cout << "相手の残り戦力:" << enemyMilitary << std::endl;
 }
 
@@ -202,7 +203,7 @@ void GameManager::UpdateAttack()
 
 bool GameManager::Gaming()
 {
-	if (Military == 0)
+	if (playerMilitary == 0)
 	{
 		std::cout << "相手の勝利" << std::endl;
 		return false;

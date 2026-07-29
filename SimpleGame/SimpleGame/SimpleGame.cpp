@@ -8,7 +8,7 @@ int main()
 	bool gaming = true;
 	while (gaming)
 	{
-		game.getMilitary();
+		game.showMilitary();
 		game.EnemyState();
 		Action playeraction=game.SelectPlayerAction();
 		int player=game.SelectPlayer();
