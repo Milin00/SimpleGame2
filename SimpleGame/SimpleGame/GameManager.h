@@ -1,5 +1,6 @@
 #pragma once
 #include<array>
+#include<memory>
 #include"Character.h"
 #include"Swordsman.h"
 #include"Wizard.h"
@@ -16,8 +17,8 @@ class GameManager
 private:
     int playerMilitary = 300;
     int enemyMilitary = 300;
-    std::array<Character*,3> players = { new Swordsman(),new Wizard(),new Summoner() };
-    std::array<Character*,3> enemies = { new Swordsman(),new Wizard(),new Summoner() };
+    std::array< std::unique_ptr<Character>,3> players ={std::make_unique<Swordsman>(),std::make_unique<Wizard>(),std::make_unique<Summoner>()};
+    std::array< std::unique_ptr<Character>, 3> enemies = { std::make_unique<Swordsman>(),std::make_unique<Wizard>(),std::make_unique<Summoner>() };
 public:
     int SelectPlayer();
     int SelectEnemy() const;
@@ -29,5 +30,4 @@ public:
     Action SelectPlayerAction();
     Action SelectEnemyAction();
     GameManager();
-    ~GameManager();
 };

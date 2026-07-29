@@ -185,32 +185,25 @@ void GameManager::showMilitary() const
 
 void GameManager::UpdateAttack()
 {
-	int sword = rand()%21 + 30;
-	int wizard = rand() % 21 + 20;
-	int summoner = 100 - sword - wizard;
-	while (summoner < 15 || summoner>40)
+	for (int i = 0;i < 2;i++)
 	{
-		sword = rand() % 21 + 30;
-		wizard = rand() % 21 + 20;
-		summoner = 100 - sword - wizard;
-	}
-	players[0]->setAttack(sword);
-	players[1]->setAttack(wizard);
-	players[2]->setAttack(summoner);
+		int sword = rand()%21 + 30;
+		int wizard = rand() % 21 + 20;
+		int summoner = 100 - sword - wizard;
+		while (summoner < 15 || summoner>40)
+		{
+			sword = rand() % 21 + 30;
+			wizard = rand() % 21 + 20;
+			summoner = 100 - sword - wizard;
+		}
+		std::array<int, 3> jobs{ sword,wizard,summoner};
 
-
-	sword = rand() % 21 + 30;
-	wizard = rand() % 21 + 20;
-	summoner = 100 - sword - wizard;
-	while (summoner < 15 || summoner>40)
-	{
-		sword = rand() % 21 + 30;
-		wizard = rand() % 21 + 20;
-		summoner = 100 - sword - wizard;
+		auto& group = (i == 0) ? players : enemies;
+		for (std::size_t j = 0;j < jobs.size();j++)
+		{
+			group[j]->setAttack(jobs[j]);
+		}
 	}
-	enemies[0]->setAttack(sword);
-	enemies[1]->setAttack(wizard);
-	enemies[2]->setAttack(summoner);
 }
 
 
@@ -227,19 +220,4 @@ bool GameManager::Gaming()
 		return false;
 	}
 	return true;
-}
-
-GameManager::~GameManager()
-{
-	for (auto& p : players)
-	{
-		delete p;
-		p = nullptr;
-	}
-
-	for (auto& e : enemies)
-	{
-		delete e;
-		e = nullptr;
-	}
 }
