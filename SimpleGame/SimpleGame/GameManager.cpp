@@ -113,7 +113,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 
 	if (playerAction == ATTACK && enemyAction == DEFEND)
 	{
-		if (player == 0 && enemy == 1 || player == 1 && enemy == 2 || player == 2 && enemy == 0 )
+		if ((player == 0 && enemy == 1) || (player == 1 && enemy == 2) || (player == 2 && enemy == 0))
 		{
 			std::cout << "カウンター発生"<<std::endl;
 
@@ -134,7 +134,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 	if (playerAction == DEFEND && enemyAction == ATTACK )
 	{
 
-		if (enemy == 0 && player == 1 || enemy == 1 && player == 2 || enemy == 2 && player == 0)
+		if ((enemy == 0 && player == 1) || (enemy == 1 && player == 2) || (enemy == 2 && player == 0))
 		{
 			std::cout << "相手のカウンター発生"<<std::endl;
 
@@ -165,7 +165,6 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 }
 void GameManager::showMilitary() const
 {
-	std::cout << "プレイヤー残り戦力:" << playerMilitary << std::endl;
 	std::cout << "プレイヤー残り戦力:" << playerMilitary << std::endl;
 	std::cout << "相手の残り戦力:" << enemyMilitary << std::endl;
 }
