@@ -5,13 +5,7 @@
 #include"Swordsman.h"
 #include"Wizard.h"
 #include"Summoner.h"
-
-enum Action
-{
-    ATTACK,
-    DEFEND
-};
-
+#include"Action.h"
 class GameManager
 {
 private:
@@ -26,7 +20,7 @@ public:
     void Battle(int player, int enemy,Action playerAction,Action enemyAction);
     void showMilitary() const;
     void UpdateAttack();
-    bool Gaming();
+    bool Gaming()const;
     Action SelectPlayerAction();
     Action SelectEnemyAction();
     GameManager();

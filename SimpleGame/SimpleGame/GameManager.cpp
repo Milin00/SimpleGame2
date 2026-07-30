@@ -84,19 +84,17 @@ void GameManager::EnemyState() const
 {
 	for (auto& e : enemies)
 	{
-		std::cout <<"‘ŠŽè:"<< e->getName() << " UŒ‚—Í:" << e->getAttack() << std::endl;
+		std::cout << "‘ŠŽè:" << e->getName() << " UŒ‚—Í:" << e->getAttack() << std::endl;
 	}
 }
-
 void GameManager::Battle(int player, int enemy, Action playerAction, Action enemyAction)
 {
 	if (playerAction == DEFEND && enemyAction == DEFEND)
 	{
-		std::cout<<"‚¨ŒÝ‚¢‚É–hŒä‚µ‚½" << std::endl;
+		std::cout << "‚¨ŒÝ‚¢‚É–hŒä‚µ‚½" << std::endl;
 		return;
 	}
-	
-	if (playerAction == ATTACK &&enemyAction == ATTACK)
+	else if (playerAction == ATTACK &&enemyAction == ATTACK)
 	{
 		int playerAttack = players[player]->getAttack();
 		int enemyAttack = enemies[enemy]->getAttack();
@@ -120,8 +118,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 
 		return;
 	}
-
-	if (playerAction == ATTACK && enemyAction == DEFEND)
+	else if (playerAction == ATTACK && enemyAction == DEFEND)
 	{
 		if ((player == 0 && enemy == 1) || (player == 1 && enemy == 2) || (player == 2 && enemy == 0))
 		{
@@ -142,8 +139,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 			enemyMilitary -= players[player]->getAttack() * 2;
 		}
 	}
-
-	if (playerAction == DEFEND && enemyAction == ATTACK )
+	else if (playerAction == DEFEND && enemyAction == ATTACK )
 	{
 
 		if ((enemy == 0 && player == 1) || (enemy == 1 && player == 2) || (enemy == 2 && player == 0))
@@ -171,8 +167,7 @@ void GameManager::Battle(int player, int enemy, Action playerAction, Action enem
 	{
 		playerMilitary = 0;
 	}
-
-	if (enemyMilitary < 0)
+	else if (enemyMilitary < 0)
 	{
 		enemyMilitary = 0;
 	}
@@ -207,7 +202,7 @@ void GameManager::UpdateAttack()
 }
 
 
-bool GameManager::Gaming()
+bool GameManager::Gaming() const
 {
 	if (playerMilitary == 0)
 	{

@@ -10,11 +10,11 @@ int main()
 	{
 		game.showMilitary();
 		game.EnemyState();
-		Action playeraction=game.SelectPlayerAction();
+		Action playerAction=game.SelectPlayerAction();
 		int player=game.SelectPlayer();
-		Action enemyaction=game.SelectEnemyAction();
+		Action enemyAction=game.SelectEnemyAction();
 		int enemy=game.SelectEnemy();
-		game.Battle(player,enemy, playeraction, enemyaction);
+		game.Battle(player,enemy, playerAction, enemyAction);
 		game.UpdateAttack();
 		gaming=game.Gaming();
 		std::cout << "\n\n\n\n\n";
